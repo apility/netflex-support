@@ -7,6 +7,7 @@ use JsonSerializable;
 abstract class NetflexObject implements JsonSerializable
 {
   use Hooks;
+  use Events;
   use Accessors;
 
   /** @var NetflexObject|null */
