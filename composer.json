@@ -1,0 +1,24 @@
+{
+  "name": "apility/netflex-support",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Thomas Alrek",
+      "email": "thomas@apility.no"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Netflex\\Support\\": "src/"
+    }
+  },
+  "require": {
+    "apility/netflex-api": "^1.0",
+    "tightenco/collect": "^6.3"
+  },
+  "require-dev": {
+    "vlucas/phpdotenv": "^3.6",
+    "larapack/dd": "^1.1"
+  }
+}
