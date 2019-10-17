@@ -17,7 +17,7 @@ trait Accessors
   public function __get($property)
   {
     $value = $this->attributes[$property] ?? null;
-    $getter = 'get' . Str::camelize($property) . 'Attribute';
+    $getter = 'get' . Str::toCamcelCase($property) . 'Attribute';
 
     if (method_exists($this, $getter)) {
       $value = $this->{$getter}($value);
@@ -42,7 +42,7 @@ trait Accessors
       !property_exists($this, 'readOnlyAttributes') ||
       !in_array($property, $this->readOnlyAttributes)
     ) {
-      $setter = 'set' . Str::camelize($property) . 'attribute';
+      $setter = 'set' . Str::toCamcelCase($property) . 'attribute';
 
       if (method_exists($this, $setter)) {
         return $this->{$setter}($value);
