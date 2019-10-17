@@ -7,7 +7,7 @@ use Tightenco\Collect\Support\Collection as BaseCollection;
 
 class ItemCollection extends BaseCollection implements JsonSerializable
 {
-  use Traits\Hooks;
+  use Hooks;
 
   /** @var string */
   protected static $type = NetflexObject::class;
