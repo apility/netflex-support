@@ -6,8 +6,8 @@ use JsonSerializable;
 
 abstract class NetflexObject implements JsonSerializable
 {
-  use Traits\Hooks;
-  use Traits\Accessors;
+  use Hooks;
+  use Accessors;
 
   /** @var NetflexObject|null */
   protected $parent = null;
