@@ -23,7 +23,7 @@ abstract class NetflexObject implements JsonSerializable
    * @param object|array $attributes = []
    * @param object|null $parent = null
    */
-  protected function __construct($attributes = [], $parent = null)
+  public function __construct($attributes = [], $parent = null)
   {
     $this->parent = $parent;
 
