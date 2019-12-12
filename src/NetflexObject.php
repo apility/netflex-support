@@ -10,7 +10,7 @@ abstract class NetflexObject implements JsonSerializable
   use Events;
   use Accessors;
 
-  /** @var NetflexObject|null */
+  /** @var NetflexObject|ItemCollection|null */
   protected $parent = null;
 
   /** @var array */
@@ -23,7 +23,7 @@ abstract class NetflexObject implements JsonSerializable
    * @param object|array $attributes = []
    * @param object|null $parent = null
    */
-  protected function __construct($attributes = [], $parent = null)
+  public function __construct($attributes = [], $parent = null)
   {
     $this->parent = $parent;
 

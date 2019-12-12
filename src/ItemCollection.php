@@ -9,17 +9,25 @@ class ItemCollection extends BaseCollection implements JsonSerializable
 {
   use Hooks;
 
+  /** @var NetflexObject|ItemCollection|null */
+  protected $parent = null;
+
   /** @var string */
   protected static $type = NetflexObject::class;
 
   /**
    * @param array|null $items = []
    */
-  public function __construct($items = [])
+  public function __construct($items = [], $parent = null)
   {
+    $this->parent = $parent;
+
     if ($items) {
       parent::__construct(array_map(function ($item) {
-        return static::$type::factory($item);
+        return static::$type::factory($item, $this)
+          ->addHook('modified', function ($_) {
+            $this->performHook('modified');
+          });
       }, $items));
     }
   }
@@ -28,9 +36,9 @@ class ItemCollection extends BaseCollection implements JsonSerializable
    * @param array|null $items = []
    * @return static
    */
-  public static function factory($items = [])
+  public static function factory($items = [], $parent = null)
   {
-    return new static($items);
+    return new static($items, $parent);
   }
 
   /**
@@ -65,7 +73,21 @@ class ItemCollection extends BaseCollection implements JsonSerializable
    */
   public function toArray()
   {
-    return array_values(array_filter(parent::toArray()));
+    return array_values(
+      array_filter(
+        $this->jsonSerialize()
+      )
+    );
+  }
+
+  /**
+   * Run a map over each of the items.
+   *
+   * @param callable $callback
+   * @return Tightenco\Collect\Support\Collection
+   */
+  public function map (callable $callback) {
+    return new BaseCollection(parent::map($callback));
   }
 
   /**
