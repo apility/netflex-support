@@ -10,7 +10,7 @@ abstract class NetflexObject implements JsonSerializable
   use Events;
   use Accessors;
 
-  /** @var NetflexObject|null */
+  /** @var NetflexObject|ItemCollection|null */
   protected $parent = null;
 
   /** @var array */
