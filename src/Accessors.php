@@ -34,6 +34,24 @@ trait Accessors
 
   /**
    * @param string $property
+   * @return bool
+   */
+  public function __isset($property)
+  {
+    if(isset($this->attributes[$property])){
+      return true;
+    }
+    
+    $getter = 'get' . Str::toCamcelCase($property) . 'Attribute';
+    if (method_exists($this, $getter)) {
+      return true;
+    }
+
+    return false;
+  }
+
+  /**
+   * @param string $property
    * @param mixed $value
    */
   public function __set($property, $value)
