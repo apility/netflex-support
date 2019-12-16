@@ -85,7 +85,7 @@ abstract class NetflexObject implements JsonSerializable
     foreach (array_keys($this->attributes) as $property) {
       $value = $this->__get($property);
 
-      if ($value instanceof ItemCollection) {
+      if (is_subclass_of($value, ItemCollection::class)) {
         $value = $value->jsonSerialize();
       }
 

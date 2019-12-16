@@ -1,0 +1,18 @@
+version: 2.1
+
+jobs:
+  tests:
+    docker:
+      - image: circleci/php:7.4
+    steps:
+      - netflex/pull
+      - netflex/composer
+      - run:
+          name: PHPUnit
+          command: cd ~/project && composer run-script tests
+
+workflows:
+  version: 2
+  deployment:
+    jobs:
+      - tests

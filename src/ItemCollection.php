@@ -5,7 +5,7 @@ namespace Netflex\Support;
 use JsonSerializable;
 use Tightenco\Collect\Support\Collection as BaseCollection;
 
-class ItemCollection extends BaseCollection implements JsonSerializable
+abstract class ItemCollection extends BaseCollection implements JsonSerializable
 {
   use Hooks;
 

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit
+  backupStaticAttributes="false"
+  cacheTokens="false"
+  convertErrorsToExceptions="true"
+  convertNoticesToExceptions="true"
+  convertWarningsToExceptions="true"
+  forceCoversAnnotation="false"
+  processIsolation="true"
+  stopOnError="true"
+  stopOnFailure="true"
+  stopOnIncomplete="true"
+  stopOnSkipped="true"
+  verbose="true"
+>
+  <testsuites>
+    <testsuite name="Netflex Support tests">
+      <directory suffix=".test.php">
+        tests
+      </directory>
+    </testsuite>
+  </testsuites>
+</phpunit>

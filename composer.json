@@ -19,6 +19,10 @@
   },
   "require-dev": {
     "vlucas/phpdotenv": "^3.6",
-    "larapack/dd": "^1.1"
+    "larapack/dd": "^1.1",
+    "phpunit/phpunit": "^8.5"
+  },
+  "scripts": {
+    "tests": "vendor/bin/phpunit --testdox --colors=always"
   }
 }
