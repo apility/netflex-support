@@ -1,5 +1,8 @@
 version: 2.1
 
+orbs:
+  netflex: netflex/netflex-deploy@2.0.6
+
 jobs:
   tests:
     docker:
