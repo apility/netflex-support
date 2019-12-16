@@ -38,16 +38,7 @@ trait Accessors
    */
   public function __isset($property)
   {
-    if(isset($this->attributes[$property])){
-      return true;
-    }
-    
-    $getter = 'get' . Str::toCamcelCase($property) . 'Attribute';
-    if (method_exists($this, $getter)) {
-      return true;
-    }
-
-    return false;
+    return !is_null($this->{$property});
   }
 
   /**
