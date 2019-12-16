@@ -2,6 +2,7 @@
 
 use PHPUnit\Framework\TestCase;
 use Netflex\Support\Hooks;
+use Netflex\Support\Accessors;
 
 final class HooksTest extends TestCase
 {
@@ -35,5 +36,26 @@ final class HooksTest extends TestCase
       3,
       $hookCalled
     );
+  }
+
+  public function testModifiedHook () {
+    $this->testItem = new class (['name' => 'foo']) {
+      use Hooks;
+      use Accessors;
+
+      public function __construct ($attributes) {
+        $this->attributes = $attributes;
+      }
+    };
+
+    $modified = 0;
+
+    $this->testItem->addHook('modified', function ($_) use (&$modified) {
+      $modified++;
+    });
+
+    $this->testItem->name = 'bar';
+
+    $this->assertSame(1, $modified);
   }
 }
