@@ -34,6 +34,15 @@ trait Accessors
 
   /**
    * @param string $property
+   * @return bool
+   */
+  public function __isset($property)
+  {
+    return !is_null($this->{$property});
+  }
+
+  /**
+   * @param string $property
    * @param mixed $value
    */
   public function __set($property, $value)
