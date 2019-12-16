@@ -50,7 +50,7 @@ final class AccessorsTest extends TestCase
   }
 
   public function testGetRegularProperty () {
-    $this->assertEquals(
+    $this->assertSame(
       'hello world',
       $this->testItem->normal
     );
@@ -59,7 +59,7 @@ final class AccessorsTest extends TestCase
   public function testSetRegularProperty () {
     $this->testItem->normal = 'OK';
 
-    $this->assertEquals(
+    $this->assertSame(
       'OK',
       $this->testItem->normal
     );
@@ -68,19 +68,19 @@ final class AccessorsTest extends TestCase
   public function testGetDynamicAttribute () {
     $this->getterCalled = 0;
 
-    $this->assertEquals(
+    $this->assertSame(
       1,
       $this->testItem->dynamic
     );
 
-    $this->assertEquals(
+    $this->assertSame(
       1,
       $this->getterCalled
     );
 
     $this->testItem->dynamic;
 
-    $this->assertEquals(
+    $this->assertSame(
       2,
       $this->getterCalled
     );
@@ -92,45 +92,45 @@ final class AccessorsTest extends TestCase
 
     $this->testItem->dynamic = 2;
 
-    $this->assertEquals(
+    $this->assertSame(
       2,
       $this->testItem->dynamic
     );
 
     $this->testItem->dynamic = -4;
 
-    $this->assertEquals(
+    $this->assertSame(
       1,
       $this->testItem->dynamic
     );
 
-    $this->assertEquals(
+    $this->assertSame(
       2,
       $this->setterCalled
     );
 
-    $this->assertEquals(
+    $this->assertSame(
       2,
       $this->getterCalled
     );
   }
 
   public function testReadyOnlyAttribute () {
-    $this->assertEquals(
+    $this->assertSame(
       'foo',
       $this->testItem->readOnly
     );
 
     $this->testItem->readOnly = 'modified';
 
-    $this->assertEquals(
+    $this->assertSame(
       'foo',
       $this->testItem->readOnly
     );
   }
 
   public function testDefaultValues () {
-    $this->assertEquals(
+    $this->assertSame(
       'baz',
       $this->testItem->bar
     );
