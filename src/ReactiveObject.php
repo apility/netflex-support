@@ -4,13 +4,13 @@ namespace Netflex\Support;
 
 use JsonSerializable;
 
-abstract class NetflexObject implements JsonSerializable
+abstract class ReactiveObject implements JsonSerializable
 {
   use Hooks;
   use Events;
   use Accessors;
 
-  /** @var NetflexObject|ItemCollection|null */
+  /** @var ReactiveObject|ItemCollection|null */
   protected $parent = null;
 
   /** @var array */

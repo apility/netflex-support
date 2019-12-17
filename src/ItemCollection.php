@@ -9,11 +9,11 @@ abstract class ItemCollection extends BaseCollection implements JsonSerializable
 {
   use Hooks;
 
-  /** @var NetflexObject|ItemCollection|null */
+  /** @var ReactiveObject|ItemCollection|null */
   protected $parent = null;
 
   /** @var string */
-  protected static $type = NetflexObject::class;
+  protected static $type = ReactiveObject::class;
 
   /**
    * @param array|null $items = []
