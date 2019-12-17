@@ -19,6 +19,6 @@ Support library for the Netflex SDK and platform.
   * Retrievable
 * Types
   * ItemCollection
-  * NetflexObject
+  * ReactiveObject
 * Helpers
   * [Str](docs/helpers/str.md)

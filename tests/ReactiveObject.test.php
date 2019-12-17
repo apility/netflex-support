@@ -1,9 +1,9 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use Netflex\Support\NetflexObject;
+use Netflex\Support\ReactiveObject;
 
-final class NetflexObjectTest extends TestCase
+final class ReactiveObjectTest extends TestCase
 {
   public function testConstructFromArray()
   {
@@ -15,7 +15,7 @@ final class NetflexObjectTest extends TestCase
       'revision' => 10001
     ];
 
-    $testObj = new class ($attributes) extends NetflexObject
+    $testObj = new class ($attributes) extends ReactiveObject
     {
     };
 
@@ -37,7 +37,7 @@ final class NetflexObjectTest extends TestCase
       'revision' => 10001
     ];
 
-    $testObj = new class ($attributes) extends NetflexObject
+    $testObj = new class ($attributes) extends ReactiveObject
     {
     };
 
@@ -53,7 +53,7 @@ final class NetflexObjectTest extends TestCase
   {
     $attributes = ['id' => '10000'];
 
-    $testObj = new class ($attributes) extends NetflexObject
+    $testObj = new class ($attributes) extends ReactiveObject
     {
     };
     $this->assertSame(
@@ -69,7 +69,7 @@ final class NetflexObjectTest extends TestCase
       'doubleValue' => 10,
     ];
 
-    $testObj = new class ($attributes) extends NetflexObject
+    $testObj = new class ($attributes) extends ReactiveObject
     {
       public function getDoubleValueAttribute($value)
       {
@@ -98,14 +98,14 @@ final class NetflexObjectTest extends TestCase
       'published' => true
     ];
 
-    $testObj = new class ($attributes) extends NetflexObject
+    $testObj = new class ($attributes) extends ReactiveObject
     {
     };
 
     $this->assertSame($attributes, $testObj->jsonSerialize());
 
     $attributes['id'] = '1234';
-    $testObj = new class ($attributes) extends NetflexObject
+    $testObj = new class ($attributes) extends ReactiveObject
     {
     };
     $attributes['id'] = 1234;
@@ -120,7 +120,7 @@ final class NetflexObjectTest extends TestCase
       'doubleValue' => 10,
     ];
 
-    $testObj = new class ($attributes) extends NetflexObject
+    $testObj = new class ($attributes) extends ReactiveObject
     {
       public function getDoubleValueAttribute($value)
       {
