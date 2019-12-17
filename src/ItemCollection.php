@@ -5,7 +5,7 @@ namespace Netflex\Support;
 use JsonSerializable;
 use Tightenco\Collect\Support\Collection as BaseCollection;
 
-class ItemCollection extends BaseCollection implements JsonSerializable
+abstract class ItemCollection extends BaseCollection implements JsonSerializable
 {
   use Hooks;
 
@@ -86,7 +86,8 @@ class ItemCollection extends BaseCollection implements JsonSerializable
    * @param callable $callback
    * @return Tightenco\Collect\Support\Collection
    */
-  public function map (callable $callback) {
+  public function map(callable $callback)
+  {
     return new BaseCollection(parent::map($callback));
   }
 
