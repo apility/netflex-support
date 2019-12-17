@@ -86,7 +86,8 @@ abstract class ItemCollection extends BaseCollection implements JsonSerializable
    * @param callable $callback
    * @return Tightenco\Collect\Support\Collection
    */
-  public function map (callable $callback) {
+  public function map(callable $callback)
+  {
     return new BaseCollection(parent::map($callback));
   }
 

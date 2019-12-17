@@ -5,11 +5,13 @@ use Netflex\Support\Accessors;
 
 final class AccessorsTest extends TestCase
 {
-  public function setUp (): void {
+  public function setUp(): void
+  {
     $this->getterCalled = 0;
     $this->setterCalled = 0;
 
-    $this->testItem = new class ($this) {
+    $this->testItem = new class ($this)
+    {
       use Accessors;
 
       /** @var TestCase */
@@ -21,7 +23,8 @@ final class AccessorsTest extends TestCase
         'bar' => 'baz'
       ];
 
-      public function __construct ($test) {
+      public function __construct($test)
+      {
         $this->test = $test;
 
         $this->attributes = [
@@ -31,12 +34,14 @@ final class AccessorsTest extends TestCase
         ];
       }
 
-      public function getDynamicAttribute ($pageNumber) {
+      public function getDynamicAttribute($pageNumber)
+      {
         $this->test->getterCalled++;
         return (int) $pageNumber;
       }
 
-      public function setDynamicAttribute ($pageNumber) {
+      public function setDynamicAttribute($pageNumber)
+      {
         $this->test->setterCalled++;
         $pageNumber = (int) $pageNumber;
 
@@ -49,14 +54,16 @@ final class AccessorsTest extends TestCase
     };
   }
 
-  public function testGetRegularProperty () {
+  public function testGetRegularProperty()
+  {
     $this->assertSame(
       'hello world',
       $this->testItem->normal
     );
   }
 
-  public function testSetRegularProperty () {
+  public function testSetRegularProperty()
+  {
     $this->testItem->normal = 'OK';
 
     $this->assertSame(
@@ -65,7 +72,8 @@ final class AccessorsTest extends TestCase
     );
   }
 
-  public function testGetDynamicAttribute () {
+  public function testGetDynamicAttribute()
+  {
     $this->getterCalled = 0;
 
     $this->assertSame(
@@ -86,7 +94,8 @@ final class AccessorsTest extends TestCase
     );
   }
 
-  public function testSetDynamicAttribute () {
+  public function testSetDynamicAttribute()
+  {
     $this->getterCalled = 0;
     $this->setterCalled = 0;
 
@@ -115,7 +124,8 @@ final class AccessorsTest extends TestCase
     );
   }
 
-  public function testReadyOnlyAttribute () {
+  public function testReadyOnlyAttribute()
+  {
     $this->assertSame(
       'foo',
       $this->testItem->readOnly
@@ -129,7 +139,8 @@ final class AccessorsTest extends TestCase
     );
   }
 
-  public function testDefaultValues () {
+  public function testDefaultValues()
+  {
     $this->assertSame(
       'baz',
       $this->testItem->bar

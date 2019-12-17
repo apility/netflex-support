@@ -12,9 +12,11 @@ trait Retrievable
    */
   public static function retrieve($id)
   {
-    return new static(
-      API::getClient()
-        ->get(trim(static::$base_path, '/') . '/' . $id)
-    );
+    if (property_exists(get_called_class(), 'base_path')) {
+      return new static(
+        API::getClient()
+          ->get(trim(static::$base_path, '/') . '/' . $id)
+      );
+    }
   }
 }

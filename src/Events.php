@@ -4,24 +4,33 @@ namespace Netflex\Support;
 
 trait Events
 {
-  /** @var array */
+  /** @var Event[] */
   protected $eventHandlers = [];
 
   /**
    * Attaches an event handler for a given event
    *
-   * @param string $event
+   * @param string $eventName
    * @param callable $handler
-   * @return void
+   * @return static
    */
-  public function on($event, callable $handler = null)
+  public function on($eventName, callable $handler = null)
   {
-    if ($handler) {
-      $this->eventHandlers[] = (object) [
-        'event' => $event,
-        'handler' => $handler
-      ];
-    }
+    return $this->addEvent(
+      new Event($eventName, $handler)
+    );
+  }
+
+  /**
+   * Attaches an Event directly
+   *
+   * @param Event $event
+   * @return static
+   */
+  public function addEvent(Event $event)
+  {
+    $this->eventHandlers[] = $event;
+    return $this;
   }
 
   /**
@@ -33,7 +42,7 @@ trait Events
    */
   public function emit($event, $payload = null)
   {
-    if (property_exists($this, 'parent') && $this->parent instanceof NetflexObject) {
+    if (property_exists($this, 'parent') && method_exists($this->parent, 'trigger')) {
       $this->parent->trigger($event, $payload);
     }
   }
@@ -41,18 +50,18 @@ trait Events
   /**
    * Invokes the event handlers for the given event
    *
-   * @param string $event
+   * @param string $eventName
    * @param mixed $payload = null
    * @return void
    */
-  public function trigger($event, $payload = null)
+  public function trigger($eventName, $payload = null)
   {
-    $handlers = array_filter($this->eventHandlers, function ($handler) use ($event) {
-      return $handler['handler'] === $event;
+    $events = array_filter($this->eventHandlers, function (Event $event) use ($eventName) {
+      return $event->name === $eventName;
     });
 
-    foreach ($handlers as $handler) {
-      $handler['handler']($payload);
+    foreach ($events as $event) {
+      $event->handle($payload);
     }
   }
 }

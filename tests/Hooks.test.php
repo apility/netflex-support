@@ -6,13 +6,16 @@ use Netflex\Support\Accessors;
 
 final class HooksTest extends TestCase
 {
-  public function setUp (): void {
-    $this->testItem = new class ($this) {
+  public function setUp(): void
+  {
+    $this->testItem = new class ($this)
+    {
       use Hooks;
     };
   }
 
-  public function testAttachAndPerformHooks () {
+  public function testAttachAndPerformHooks()
+  {
     $hookCalled = 0;
 
     $hook = function ($value) use (&$hookCalled) {
@@ -38,12 +41,15 @@ final class HooksTest extends TestCase
     );
   }
 
-  public function testModifiedHook () {
-    $this->testItem = new class (['name' => 'foo']) {
+  public function testModifiedHook()
+  {
+    $this->testItem = new class (['name' => 'foo'])
+    {
       use Hooks;
       use Accessors;
 
-      public function __construct ($attributes) {
+      public function __construct($attributes)
+      {
         $this->attributes = $attributes;
       }
     };

@@ -5,7 +5,8 @@ use Netflex\Support\NetflexObject;
 
 final class NetflexObjectTest extends TestCase
 {
-  public function testConstructFromArray () {
+  public function testConstructFromArray()
+  {
     $attributes = [
       'id' => 10000,
       'name' => 'Test',
@@ -14,7 +15,9 @@ final class NetflexObjectTest extends TestCase
       'revision' => 10001
     ];
 
-    $testObj = new class ($attributes) extends NetflexObject {};
+    $testObj = new class ($attributes) extends NetflexObject
+    {
+    };
 
     foreach ($attributes as $key => $value) {
       $this->assertSame(
@@ -24,7 +27,8 @@ final class NetflexObjectTest extends TestCase
     }
   }
 
-  public function testConstructFromObject () {
+  public function testConstructFromObject()
+  {
     $attributes = (object) [
       'id' => 10000,
       'name' => 'Test',
@@ -33,7 +37,9 @@ final class NetflexObjectTest extends TestCase
       'revision' => 10001
     ];
 
-    $testObj = new class ($attributes) extends NetflexObject {};
+    $testObj = new class ($attributes) extends NetflexObject
+    {
+    };
 
     foreach ($attributes as $key => $value) {
       $this->assertSame(
@@ -43,24 +49,30 @@ final class NetflexObjectTest extends TestCase
     }
   }
 
-  public function testIdGetter () {
+  public function testIdGetter()
+  {
     $attributes = ['id' => '10000'];
 
-    $testObj = new class ($attributes) extends NetflexObject {};
+    $testObj = new class ($attributes) extends NetflexObject
+    {
+    };
     $this->assertSame(
       10000,
       $testObj->id
     );
   }
 
-  public function testDebugInfo () {
+  public function testDebugInfo()
+  {
     $attributes = [
       'id' => '10000',
       'doubleValue' => 10,
     ];
 
-    $testObj = new class ($attributes) extends NetflexObject {
-      public function getDoubleValueAttribute ($value) {
+    $testObj = new class ($attributes) extends NetflexObject
+    {
+      public function getDoubleValueAttribute($value)
+      {
         return $value * 2;
       }
     };
@@ -76,5 +88,47 @@ final class NetflexObjectTest extends TestCase
       20,
       $testObj->doubleValue
     );
+  }
+
+  public function testJsonSerialization()
+  {
+    $attributes = [
+      'id' => 10000,
+      'name' => 'test',
+      'published' => true
+    ];
+
+    $testObj = new class ($attributes) extends NetflexObject
+    {
+    };
+
+    $this->assertSame($attributes, $testObj->jsonSerialize());
+
+    $attributes['id'] = '1234';
+    $testObj = new class ($attributes) extends NetflexObject
+    {
+    };
+    $attributes['id'] = 1234;
+
+    $this->assertSame($attributes, $testObj->jsonSerialize());
+  }
+
+  public function testJsonSerializationInvokesGetters()
+  {
+    $attributes = [
+      'id' => 10000,
+      'doubleValue' => 10,
+    ];
+
+    $testObj = new class ($attributes) extends NetflexObject
+    {
+      public function getDoubleValueAttribute($value)
+      {
+        return $value * 2;
+      }
+    };
+
+    $this->assertNotSame($attributes, $testObj->jsonSerialize());
+    $this->assertSame(20, $testObj->jsonSerialize()['doubleValue']);
   }
 }
