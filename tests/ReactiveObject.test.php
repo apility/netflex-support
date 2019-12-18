@@ -1,10 +1,17 @@
 <?php
 
+use Mocks\TestObject;
 use PHPUnit\Framework\TestCase;
 use Netflex\Support\ReactiveObject;
 
 final class ReactiveObjectTest extends TestCase
 {
+  public function testIsAbstract()
+  {
+    $this->expectException(Error::class);
+    new ReactiveObject();
+  }
+
   public function testConstructFromArray()
   {
     $attributes = [
@@ -15,9 +22,7 @@ final class ReactiveObjectTest extends TestCase
       'revision' => 10001
     ];
 
-    $testObj = new class ($attributes) extends ReactiveObject
-    {
-    };
+    $testObj = TestObject::factory($attributes);
 
     foreach ($attributes as $key => $value) {
       $this->assertSame(
@@ -37,9 +42,7 @@ final class ReactiveObjectTest extends TestCase
       'revision' => 10001
     ];
 
-    $testObj = new class ($attributes) extends ReactiveObject
-    {
-    };
+    $testObj = TestObject::factory($attributes);
 
     foreach ($attributes as $key => $value) {
       $this->assertSame(
@@ -53,31 +56,22 @@ final class ReactiveObjectTest extends TestCase
   {
     $attributes = ['id' => '10000'];
 
-    $testObj = new class ($attributes) extends ReactiveObject
-    {
-    };
+    $testObj = TestObject::factory($attributes);
+
     $this->assertSame(
       10000,
       $testObj->id
     );
   }
 
-  public function testDebugInfo()
+  public function testGetters()
   {
     $attributes = [
       'id' => '10000',
       'doubleValue' => 10,
     ];
 
-    $testObj = new class ($attributes) extends ReactiveObject
-    {
-      public function getDoubleValueAttribute($value)
-      {
-        return $value * 2;
-      }
-    };
-
-    $debug = $testObj->__debugInfo();
+    $testObj = TestObject::factory($attributes);
 
     $this->assertSame(
       10000,
@@ -98,16 +92,13 @@ final class ReactiveObjectTest extends TestCase
       'published' => true
     ];
 
-    $testObj = new class ($attributes) extends ReactiveObject
-    {
-    };
+    $testObj = TestObject::factory($attributes);
 
     $this->assertSame($attributes, $testObj->jsonSerialize());
 
     $attributes['id'] = '1234';
-    $testObj = new class ($attributes) extends ReactiveObject
-    {
-    };
+    $testObj = TestObject::factory($attributes);
+
     $attributes['id'] = 1234;
 
     $this->assertSame($attributes, $testObj->jsonSerialize());
@@ -120,13 +111,7 @@ final class ReactiveObjectTest extends TestCase
       'doubleValue' => 10,
     ];
 
-    $testObj = new class ($attributes) extends ReactiveObject
-    {
-      public function getDoubleValueAttribute($value)
-      {
-        return $value * 2;
-      }
-    };
+    $testObj = TestObject::factory($attributes);
 
     $this->assertNotSame($attributes, $testObj->jsonSerialize());
     $this->assertSame(20, $testObj->jsonSerialize()['doubleValue']);

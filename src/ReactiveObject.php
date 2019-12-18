@@ -43,6 +43,24 @@ abstract class ReactiveObject implements JsonSerializable
   }
 
   /**
+   * @param ReactiveObject|ItemCollection|null $parent
+   * @return static
+   */
+  public function setParent($parent)
+  {
+    $this->parent = $parent;
+    return $this;
+  }
+
+  /**
+   * @return ReactiveObject|ItemCollection|null
+   */
+  public function getParent()
+  {
+    return $this->parent;
+  }
+
+  /**
    * @param string|int $id
    * @return int
    */
@@ -85,7 +103,7 @@ abstract class ReactiveObject implements JsonSerializable
     foreach (array_keys($this->attributes) as $property) {
       $value = $this->__get($property);
 
-      if (is_subclass_of($value, ItemCollection::class)) {
+      if ($value instanceof ItemCollection) {
         $value = $value->jsonSerialize();
       }
 
