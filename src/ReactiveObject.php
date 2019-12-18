@@ -2,9 +2,10 @@
 
 namespace Netflex\Support;
 
+use ArrayAccess;
 use JsonSerializable;
 
-abstract class ReactiveObject implements JsonSerializable
+abstract class ReactiveObject implements ArrayAccess, JsonSerializable
 {
   use Hooks;
   use Events;
