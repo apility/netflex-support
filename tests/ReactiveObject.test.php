@@ -116,4 +116,47 @@ final class ReactiveObjectTest extends TestCase
     $this->assertNotSame($attributes, $testObj->jsonSerialize());
     $this->assertSame(20, $testObj->jsonSerialize()['doubleValue']);
   }
+
+  public function testArrayAccess()
+  {
+    $testObj = TestObject::factory([
+      'id' => 10000,
+      'name' => 'Test',
+      'empty' => null,
+      'doubleValue' => 4
+    ]);
+
+    $this->assertSame(
+      10000,
+      $testObj['id']
+    );
+
+    $this->assertSame(
+      'Test',
+      $testObj['name']
+    );
+
+    $this->assertSame(
+      8,
+      $testObj['doubleValue']
+    );
+
+    $testObj['newKey'] = 'Test123';
+
+    $this->assertSame(
+      'Test123',
+      $testObj['newKey']
+    );
+
+    $this->assertSame(
+      'Test123',
+      $testObj->newKey
+    );
+
+    unset($testObj['newKey']);
+
+    $this->assertNull(
+      $testObj['newKey']
+    );
+  }
 }
