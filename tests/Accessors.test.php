@@ -1,7 +1,7 @@
 <?php
 
+use Mocks\TestObjectWithDefaults;
 use PHPUnit\Framework\TestCase;
-use Netflex\Support\Accessors;
 
 final class AccessorsTest extends TestCase
 {
@@ -10,48 +10,12 @@ final class AccessorsTest extends TestCase
     $this->getterCalled = 0;
     $this->setterCalled = 0;
 
-    $this->testItem = new class ($this)
-    {
-      use Accessors;
-
-      /** @var TestCase */
-      private $test;
-
-      protected $readOnlyAttributes = ['readOnly'];
-
-      protected $defaults = [
-        'bar' => 'baz'
-      ];
-
-      public function __construct($test)
-      {
-        $this->test = $test;
-
-        $this->attributes = [
-          'normal' => 'hello world',
-          'dynamic' => '1',
-          'readOnly' => 'foo'
-        ];
-      }
-
-      public function getDynamicAttribute($pageNumber)
-      {
-        $this->test->getterCalled++;
-        return (int) $pageNumber;
-      }
-
-      public function setDynamicAttribute($pageNumber)
-      {
-        $this->test->setterCalled++;
-        $pageNumber = (int) $pageNumber;
-
-        if ($pageNumber < 1) {
-          $pageNumber = 1;
-        }
-
-        $this->attributes['dynamic'] = (string) $pageNumber;
-      }
-    };
+    $this->testItem = new TestObjectWithDefaults([
+      'normal' => 'hello world',
+      'dynamic' => '1',
+      'readOnly' => 'foo',
+      'weird_named_property' => 'nice'
+    ], null, $this);
   }
 
   public function testGetRegularProperty()
@@ -121,6 +85,13 @@ final class AccessorsTest extends TestCase
     $this->assertSame(
       2,
       $this->getterCalled
+    );
+  }
+
+  public function testGetDynamicAttributeWithUnderscore () {
+    $this->assertSame(
+      'Very nice',
+      $this->testItem->weird_named_property
     );
   }
 
