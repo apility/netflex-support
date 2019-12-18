@@ -5,7 +5,7 @@ namespace Netflex\Support;
 use JsonSerializable;
 use Tightenco\Collect\Support\Collection as BaseCollection;
 
-abstract class ItemCollection extends BaseCollection implements JsonSerializable
+class ItemCollection extends BaseCollection implements JsonSerializable
 {
   use Hooks;
 
@@ -24,10 +24,15 @@ abstract class ItemCollection extends BaseCollection implements JsonSerializable
 
     if ($items) {
       parent::__construct(array_map(function ($item) {
-        return static::$type::factory($item, $this)
-          ->addHook('modified', function ($_) {
-            $this->performHook('modified');
-          });
+        if (!($item instanceof static::$type)) {
+          $item = static::$type::factory($item);
+        }
+
+        $item->setParent($this);
+
+        return $item->addHook('modified', function ($_) {
+          $this->performHook('modified');
+        });
       }, $items));
     }
   }
@@ -98,7 +103,7 @@ abstract class ItemCollection extends BaseCollection implements JsonSerializable
   {
     $items = $this->all();
 
-    if ($items) {
+    if ($items && count($items)) {
       return array_map(function ($item) {
         return $item->jsonSerialize();
       }, $items);

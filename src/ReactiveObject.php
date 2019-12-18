@@ -4,7 +4,7 @@ namespace Netflex\Support;
 
 use JsonSerializable;
 
-abstract class ReactiveObject implements JsonSerializable
+class ReactiveObject implements JsonSerializable
 {
   use Hooks;
   use Events;
@@ -40,6 +40,24 @@ abstract class ReactiveObject implements JsonSerializable
         }
       }
     }
+  }
+
+  /**
+   * @param ReactiveObject|ItemCollection|null $parent
+   * @return static
+   */
+  public function setParent($parent)
+  {
+    $this->parent = $parent;
+    return $this;
+  }
+
+  /**
+   * @return ReactiveObject|ItemCollection|null
+   */
+  public function getParent()
+  {
+    return $this->parent;
   }
 
   /**
@@ -85,7 +103,7 @@ abstract class ReactiveObject implements JsonSerializable
     foreach (array_keys($this->attributes) as $property) {
       $value = $this->__get($property);
 
-      if (is_subclass_of($value, ItemCollection::class)) {
+      if ($value instanceof ItemCollection) {
         $value = $value->jsonSerialize();
       }
 
