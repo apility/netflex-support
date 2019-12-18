@@ -1,14 +1,22 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
+
+use Mocks\TestObject;
+use Mocks\TestCollection;
 use Netflex\Support\ItemCollection;
-use Netflex\Support\ReactiveObject;
 
 final class ItemCollectionTest extends TestCase
 {
+  public function testIsAbstract()
+  {
+    $this->expectException(Error::class);
+    new ItemCollection();
+  }
+
   public function testCanConstructWithArray()
   {
-    $testCollection = ItemCollection::factory([
+    $testCollection = TestCollection::factory([
       ['id' => 1],
       ['id' => 2]
     ]);
@@ -19,7 +27,7 @@ final class ItemCollectionTest extends TestCase
     );
 
     $this->assertInstanceOf(
-      ReactiveObject::class,
+      TestObject::class,
       $testCollection->first()
     );
 
@@ -31,9 +39,9 @@ final class ItemCollectionTest extends TestCase
 
   public function testCanConstructWithObjects()
   {
-    $testCollection = ItemCollection::factory([
-      ReactiveObject::factory(['id' => 1]),
-      ReactiveObject::factory(['id' => 2])
+    $testCollection = TestCollection::factory([
+      TestObject::factory(['id' => 1]),
+      TestObject::factory(['id' => 2])
     ]);
 
     $this->assertSame(
@@ -42,7 +50,7 @@ final class ItemCollectionTest extends TestCase
     );
 
     $this->assertInstanceOf(
-      ReactiveObject::class,
+      TestObject::class,
       $testCollection->first()
     );
 
@@ -54,10 +62,10 @@ final class ItemCollectionTest extends TestCase
 
   public function testToArray()
   {
-    $testCollection = ItemCollection::factory([
-      ReactiveObject::factory(['id' => 1]),
+    $testCollection = TestCollection::factory([
+      TestObject::factory(['id' => 1]),
       null,
-      ReactiveObject::factory(['id' => 2]),
+      TestObject::factory(['id' => 2]),
       null
     ]);
 
@@ -74,16 +82,16 @@ final class ItemCollectionTest extends TestCase
 
   public function testNestedSerialization()
   {
-    $testChildItem1 = ReactiveObject::factory(['id' => 1]);
+    $testChildItem1 = TestObject::factory(['id' => 1]);
 
-    $testChildItem2 = ReactiveObject::factory([
+    $testChildItem2 = TestObject::factory([
       'id' => 2,
-      'children' => ItemCollection::factory([
-        ReactiveObject::factory(['id' => 3])
+      'children' => TestCollection::factory([
+        TestObject::factory(['id' => 3])
       ])
     ]);
 
-    $testCollection = ItemCollection::factory([
+    $testCollection = TestCollection::factory([
       $testChildItem1,
       $testChildItem2
     ]);

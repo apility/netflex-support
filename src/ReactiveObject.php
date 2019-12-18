@@ -4,7 +4,7 @@ namespace Netflex\Support;
 
 use JsonSerializable;
 
-class ReactiveObject implements JsonSerializable
+abstract class ReactiveObject implements JsonSerializable
 {
   use Hooks;
   use Events;
