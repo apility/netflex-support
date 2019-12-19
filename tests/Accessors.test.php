@@ -88,7 +88,8 @@ final class AccessorsTest extends TestCase
     );
   }
 
-  public function testGetDynamicAttributeWithUnderscore () {
+  public function testGetDynamicAttributeWithUnderscore()
+  {
     $this->assertSame(
       'Very nice',
       $this->testItem->weird_named_property
