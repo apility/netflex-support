@@ -4,6 +4,8 @@ namespace Netflex\Support;
 
 use ArrayAccess;
 use JsonSerializable;
+use Carbon\Carbon;
+use ReflectionClass;
 
 abstract class ReactiveObject implements ArrayAccess, JsonSerializable
 {
@@ -108,9 +110,21 @@ abstract class ReactiveObject implements ArrayAccess, JsonSerializable
         $value = $value->jsonSerialize();
       }
 
+      if (($value instanceof Carbon) && property_exists($this, 'timestamps') && in_array($property, $this->timestamps)) {
+        $value = $this->serializeTimestamp($value);
+      }
+
       $json[$property] = $value;
     }
 
     return $json;
+  }
+
+  public static function hasTrait($trait)
+  {
+    return in_array(
+      $trait,
+      array_keys((new ReflectionClass(self::class))->getTraits())
+    );
   }
 }

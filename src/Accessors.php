@@ -4,6 +4,8 @@ namespace Netflex\Support;
 
 trait Accessors
 {
+  use Timestamps;
+
   /** @var array */
   protected $attributes = [];
 
@@ -33,10 +35,16 @@ trait Accessors
       $value = $this->{$getter}($value);
     }
 
+    $hasTimestamps = method_exists($this, 'isTimestamp');
+
     if (property_exists($this, 'defaults')) {
       if (is_null($value) && array_key_exists($property, $this->defaults)) {
-        return $this->defaults[$property];
+        $value = $this->defaults[$property];
       }
+    }
+
+    if ($hasTimestamps && $this->isTimestamp($property)) {
+      return $this->getTimestamp($value);
     }
 
     return $value;
@@ -53,6 +61,10 @@ trait Accessors
       !in_array($property, $this->readOnlyAttributes)
     ) {
       $setter = $this->setterName($property);
+
+      if (property_exists($this, 'timestamps') && in_array($property, $this->timestamps) && method_exists($this, 'setTimestamp')) {
+        $value = $this->setTimestamp($value);
+      }
 
       if (method_exists($this, $setter)) {
         return $this->{$setter}($value);
