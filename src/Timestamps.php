@@ -18,6 +18,7 @@ trait Timestamps
   public function serializeTimestamp($value)
   {
     if ($value) {
+      $value = ($value instanceof Carbon) ? $value : Carbon::parse($value);
       return $value->toDateTimeString();
     }
   }
@@ -40,6 +41,10 @@ trait Timestamps
     return $this->serializeTimestamp($value);
   }
 
+  /**
+   * @param string $property
+   * @return bool
+   */
   private function isTimestamp($property)
   {
     return (property_exists($this, 'timestamps') &&
