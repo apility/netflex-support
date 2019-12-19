@@ -37,11 +37,7 @@ trait Timestamps
    */
   private function setTimestamp($value)
   {
-    if ($value instanceof Carbon) {
-      return $value->toDateTimeString();
-    }
-
-    return $value ?? null;
+    return $this->serializeTimestamp($value);
   }
 
   private function isTimestamp($property)
