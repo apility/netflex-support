@@ -15,7 +15,8 @@
   },
   "require": {
     "apility/netflex-api": "^1.0",
-    "tightenco/collect": "^6.3"
+    "tightenco/collect": "^6.3",
+    "nesbot/carbon": "^2.28"
   },
   "require-dev": {
     "vlucas/phpdotenv": "^3.6",
