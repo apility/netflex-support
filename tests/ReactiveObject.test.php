@@ -1,6 +1,10 @@
 <?php
 
 use Mocks\TestObject;
+use Mocks\TestTrait;
+use Netflex\Support\Accessors;
+use Netflex\Support\Events;
+use Netflex\Support\Hooks;
 use PHPUnit\Framework\TestCase;
 use Netflex\Support\ReactiveObject;
 
@@ -158,5 +162,13 @@ final class ReactiveObjectTest extends TestCase
     $this->assertNull(
       $testObj['newKey']
     );
+  }
+
+  public function testHasTrait()
+  {
+    $this->assertTrue(TestObject::hasTrait(Events::class));
+    $this->assertTrue(TestObject::hasTrait(Hooks::class));
+    $this->assertTrue(TestObject::hasTrait(Accessors::class));
+    $this->assertFalse(TestObject::hasTrait(TestTrait::class));
   }
 }
