@@ -30,7 +30,8 @@ final class TimestampsTest extends TestCase
     $this->assertIsString($this->testItem->notATimeStamp);
   }
 
-  public function testIsCorrectlyCasted () {
+  public function testIsCorrectlyCasted()
+  {
     $this->assertSame(
       $this->created->toDateTimeString(),
       $this->testItem->created->toDateTimeString()
@@ -42,7 +43,8 @@ final class TimestampsTest extends TestCase
     );
   }
 
-  public function testAssignmentFromCarbon () {
+  public function testAssignmentFromCarbon()
+  {
     $timestamp = Carbon::parse('2020-05-17 00:00:00');
     $this->testItem->updated = $timestamp;
 
@@ -52,7 +54,8 @@ final class TimestampsTest extends TestCase
     );
   }
 
-  public function testAssignmentFromString () {
+  public function testAssignmentFromString()
+  {
     $timestamp = '2020-04-01 00:00:00';
     $this->testItem->updated = $timestamp;
 
@@ -62,7 +65,8 @@ final class TimestampsTest extends TestCase
     );
   }
 
-  public function testDefaultAttribute () {
+  public function testDefaultAttribute()
+  {
     $this->assertInstanceOf(Carbon::class, $this->testItem->defaultTimestamp);
 
     $this->assertSame(
@@ -78,7 +82,8 @@ final class TimestampsTest extends TestCase
     );
   }
 
-  public function testRespectsReadOnlyFlag () {
+  public function testRespectsReadOnlyFlag()
+  {
     $before = $this->testItem->created->toDateTimeString();
     $this->testItem->created = '2020-05-17 00:00:00';
 
@@ -88,7 +93,8 @@ final class TimestampsTest extends TestCase
     );
   }
 
-  public function testJsonSerialization () {
+  public function testJsonSerialization()
+  {
     $json = $this->testItem->jsonSerialize();
 
     $this->assertIsString($json['created']);

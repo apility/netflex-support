@@ -120,10 +120,11 @@ abstract class ReactiveObject implements ArrayAccess, JsonSerializable
     return $json;
   }
 
-  public static function hasTrait ($trait) {
+  public static function hasTrait($trait)
+  {
     return in_array(
       $trait,
       array_keys((new ReflectionClass(self::class))->getTraits())
-  );
+    );
   }
 }
