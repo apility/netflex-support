@@ -110,6 +110,10 @@ abstract class ReactiveObject implements ArrayAccess, JsonSerializable
         $value = $value->jsonSerialize();
       }
 
+      if ($value instanceof ReactiveObject) {
+        $value = $value->jsonSerialize();
+      }
+
       if (($value instanceof Carbon) && property_exists($this, 'timestamps') && in_array($property, $this->timestamps)) {
         $value = $this->serializeTimestamp($value);
       }
