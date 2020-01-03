@@ -3,6 +3,7 @@
 namespace Netflex\Support;
 
 use Netflex\API;
+use Tightenco\Collect\Support\Collection;
 
 trait Retrievable
 {
@@ -17,6 +18,20 @@ trait Retrievable
         API::getClient()
           ->get(trim(static::$base_path, '/') . '/' . $id)
       );
+    }
+  }
+
+  /**
+   * @return Collection
+   */
+  public static function all(){
+    if (property_exists(get_called_class(), 'base_path')) {
+      return collect(
+        API::getClient()
+          ->get(trim(static::$base_path, '/'))
+      )->map(function ($attributes) {
+        return static::factory($attributes);
+      });
     }
   }
 }
